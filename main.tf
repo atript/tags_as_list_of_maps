@@ -1,12 +1,11 @@
 data "null_data_source" "tags_as_list_of_maps" {
   count = "${length(keys(var.tags))}"
 
-  inputs = "${concat(map(
+  inputs = "${map(
     "key", "${element(keys(var.tags), count.index)}",
     "value", "${element(values(var.tags), count.index)}",
     "propagate_at_launch", true
-  ),
-  data.null_data_source.additional_tags_as_list_of_maps.*.outputs)}"
+  )}"
 }
 
 data "null_data_source" "additional_tags_as_list_of_maps" {
